@@ -38,7 +38,7 @@ func (api *Api) handleSubscribeUserToAuction(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	userId, ok := api.Sessions.Get(r.Context(), "AuthenticatedUserId").(uuid.UUID)
+	_, ok := api.Sessions.Get(r.Context(), "AuthenticatedUserId").(uuid.UUID)
 
 	if !ok {
 		jsonutils.EncodeJson(w, r, http.StatusInternalServerError, map[string]any{
