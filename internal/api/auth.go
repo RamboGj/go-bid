@@ -3,6 +3,8 @@ package api
 import (
 	"go-bid/internal/jsonutils"
 	"net/http"
+
+	"github.com/gorilla/csrf"
 )
 
 func (api *Api) AuthMiddleware(next http.Handler) http.Handler {
@@ -15,5 +17,12 @@ func (api *Api) AuthMiddleware(next http.Handler) http.Handler {
 		}
 
 		next.ServeHTTP(w, r)
+	})
+}
+
+func (api *Api) HandleGetCSRFToken(w http.ResponseWriter, r *http.Request) {
+	token := csrf.Token(r)
+	jsonutils.EncodeJson(w, r, http.StatusOK, map[string]any{
+		"csrf_token": token,
 	})
 }
