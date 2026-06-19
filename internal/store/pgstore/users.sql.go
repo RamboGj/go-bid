@@ -7,6 +7,7 @@ package pgstore
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
@@ -56,7 +57,7 @@ type GetUserByEmailRow struct {
 	Email        string             `json:"email"`
 	Bio          string             `json:"bio"`
 	PasswordHash []byte             `json:"password_hash"`
-	CreatedAt    pgtype.Timestamptz `json:"created_at"`
+	CreatedAt    time.Time          `json:"created_at"`
 	UpdatedAt    pgtype.Timestamptz `json:"updated_at"`
 }
 
@@ -94,7 +95,7 @@ type GetUserByIDRow struct {
 	Email        string             `json:"email"`
 	Bio          string             `json:"bio"`
 	PasswordHash []byte             `json:"password_hash"`
-	CreatedAt    pgtype.Timestamptz `json:"created_at"`
+	CreatedAt    time.Time          `json:"created_at"`
 	UpdatedAt    pgtype.Timestamptz `json:"updated_at"`
 }
 
