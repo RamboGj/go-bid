@@ -9,7 +9,21 @@ SELECT
     user_name,
     email, 
     bio, 
+    password_hash,
     created_at, 
     updated_at 
 FROM users
 WHERE id = $1;
+
+-- name: GetUserByEmail :one
+SELECT 
+    id, 
+    user_name,
+    email, 
+    bio, 
+    password_hash,
+    created_at, 
+    updated_at 
+FROM users
+WHERE email = $1;
+

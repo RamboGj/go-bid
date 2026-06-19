@@ -2,3 +2,5 @@
 
 To run migrations: `go run .\cmd\terndotenv\`
 To generate from queries: `sqlc generate -f .\internal\store\pgstore\sqlc.yml`
+
+CSRF Token (Cross-Site Request Forgery)
