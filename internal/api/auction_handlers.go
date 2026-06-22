@@ -66,13 +66,19 @@ func (api *Api) handleSubscribeUserToAuction(w http.ResponseWriter, r *http.Requ
 	}
 
 	conn, err := api.WsUpgrader.Upgrade(w, r, nil)
-	defer conn.Close()
+	if err != nil {
+		jsonutils.EncodeJson(w, r, http.StatusInternalServerError, map[string]any{
+			"message": "could not upgrade connection to a websocket protocol",
+		})
+		return
+	}
 
+	// The read/write goroutines own the connection's lifecycle and each
+	// close it in their own defer, so we must NOT close it here — doing so
+	// would tear down the socket the instant this handler returns.
 	client := services.NewClient(room, conn, userId)
 
 	room.Register <- client
-	// go client.ReadEventLoop()
-	// go client.WriteEventLoop()
-	for {
-	}
+	go client.ReadEventLoop()
+	go client.WriteEventLoop()
 }
